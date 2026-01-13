@@ -3,8 +3,8 @@
 # Scriptin bulundugu klasoru al (.sh dosyasi ile ayni yer)
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Web klasorune git
-cd "$SCRIPT_DIR/web" || { echo "Web klasoru bulunamadi!"; exit 1; }
+# Proje klasorune git
+cd "$SCRIPT_DIR" || { echo "Proje klasoru bulunamadi!"; exit 1; }
 
 echo "--- SIHIRLI MATEMATIK OYUNU BASLATILIYOR ---"
 
