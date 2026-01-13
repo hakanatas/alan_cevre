@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- MediaPipe Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
 
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loader-content">
-            <div class="spinner"></div>
-            <h2>Sistem Başlatılıyor...</h2>
-            <p>Kamera ve Yapay Zeka Hazırlanıyor</p>
+            <div class="spinner" id="loading-spinner"></div>
+            <h2 id="loading-text">Sistem Başlatılıyor...</h2>
+            <p id="loading-subtext">Kamera ve Yapay Zeka Hazırlanıyor</p>
+            <button id="start-button" class="hidden">🎮 OYUNU BAŞLAT</button>
         </div>
     </div>
 
@@ -50,10 +54,10 @@
         <div id="viewport">
             <video id="webcam" autoplay playsinline></video>
             <canvas id="output_canvas"></canvas>
-            
+
             <!-- Dynamic Hand Overlay UI (Floating Labels) -->
             <div id="hand-ui-overlay"></div>
-            
+
             <!-- Success Overlay -->
             <div id="success-overlay" class="hidden">
                 <div class="success-content">
@@ -87,4 +91,5 @@
 
     <script type="module" src="script.js"></script>
 </body>
+
 </html>

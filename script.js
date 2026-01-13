@@ -150,12 +150,28 @@ async function createHandLandmarker() {
         numHands: 2
     });
 
-    // Once loaded, start camera
-    loadingScreen.style.opacity = 0;
-    setTimeout(() => {
-        loadingScreen.classList.add("hidden");
-        enableCam();
-    }, 500);
+    // Model loaded - show start button
+    const spinner = document.getElementById("loading-spinner");
+    const loadingText = document.getElementById("loading-text");
+    const loadingSubtext = document.getElementById("loading-subtext");
+    const startButton = document.getElementById("start-button");
+
+    spinner.classList.add("hidden");
+    loadingText.innerText = "Hazır!";
+    loadingSubtext.innerText = "Oyunu başlatmak için butona tıkla";
+    startButton.classList.remove("hidden");
+
+    startButton.addEventListener("click", () => {
+        // Initialize audio on user interaction (required by browsers)
+        initAudio();
+        playTickSound(); // Test sound
+
+        loadingScreen.style.opacity = 0;
+        setTimeout(() => {
+            loadingScreen.classList.add("hidden");
+            enableCam();
+        }, 500);
+    });
 }
 
 function hasGetUserMedia() {

@@ -55,6 +55,26 @@ body {
     margin: 0 auto 20px;
 }
 
+#start-button {
+    background: linear-gradient(135deg, var(--neon-green), #00cc00);
+    color: #000;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    font-family: var(--font-main);
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 0 30px rgba(50, 255, 50, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#start-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(50, 255, 50, 0.8);
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
