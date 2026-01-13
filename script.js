@@ -5,6 +5,71 @@ import {
     FilesetResolver
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
 
+// --- AUDIO SYSTEM (Web Audio API) ---
+let audioCtx = null;
+
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+}
+
+function playSuccessSound() {
+    initAudio();
+    const now = audioCtx.currentTime;
+
+    // Success melody: ascending notes
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+    notes.forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = freq;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.3, now + i * 0.1);
+        gain.gain.exponentialDecayTo && gain.gain.exponentialDecayTo(0.01, now + i * 0.1 + 0.3);
+        gain.gain.setValueAtTime(0.3, now + i * 0.1);
+        gain.gain.linearRampToValueAtTime(0.01, now + i * 0.1 + 0.25);
+        osc.start(now + i * 0.1);
+        osc.stop(now + i * 0.1 + 0.3);
+    });
+}
+
+function playFailSound() {
+    initAudio();
+    const now = audioCtx.currentTime;
+
+    // Fail sound: low buzzer
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = 200;
+    osc.type = 'square';
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+    osc.start(now);
+    osc.stop(now + 0.4);
+}
+
+function playTickSound() {
+    initAudio();
+    const now = audioCtx.currentTime;
+
+    // Tick sound: short blip
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = 880;
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+    osc.start(now);
+    osc.stop(now + 0.1);
+}
+
 // --- CONFIGURATION ---
 const PIXELS_PER_UNIT = 60;
 const QUESTIONS_SOURCE = [
@@ -244,6 +309,9 @@ function processGameLogic(landmarks) {
 }
 
 function triggerFail(x, y, w, h) {
+    // Play fail sound
+    playFailSound();
+
     // Set a timer to show red effect
     failFeedbackTimer = Date.now();
 
@@ -369,6 +437,9 @@ function triggerSuccess(unitW, unitH, left, top, snappedRight, snappedBottom, ri
     if (isSuccess) return;
     isSuccess = true;
 
+    // Play success melody
+    playSuccessSound();
+
     frozenShape = {
         left, top, right, bottom, unitW, unitH, snappedRight, snappedBottom
     };
@@ -397,6 +468,7 @@ function triggerSuccess(unitW, unitH, left, top, snappedRight, snappedBottom, ri
     successTimer = setInterval(() => {
         countdown--;
         timerValEl.innerText = countdown;
+        playTickSound(); // Play tick on countdown
         if (countdown <= 0) {
             clearInterval(successTimer);
             nextLevel();
