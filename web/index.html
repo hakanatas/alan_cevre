@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sihirli Matematik - Dikdörtgen Oyunu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- MediaPipe Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>Sistem Başlatılıyor...</h2>
+            <p>Kamera ve Yapay Zeka Hazırlanıyor</p>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container">
+        <!-- Top Panel (HUD) -->
+        <div id="top-panel">
+            <div class="panel-content">
+                <div class="task-info">
+                    <span id="level-indicator">GÖREV 1 / 8</span>
+                    <span id="instruction-text">YÖNERGE: İki işaret parmağınla dikdörtgen oluştur.</span>
+                </div>
+                <div class="target-display">
+                    <div class="target-item neon-blue">
+                        <span class="label">HEDEF ALAN</span>
+                        <span class="value" id="target-area">0</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="target-item neon-blue">
+                        <span class="label">HEDEF ÇEVRE</span>
+                        <span class="value" id="target-perimeter">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-line"></div>
+        </div>
+
+        <!-- Main Viewport -->
+        <div id="viewport">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="output_canvas"></canvas>
+            
+            <!-- Dynamic Hand Overlay UI (Floating Labels) -->
+            <div id="hand-ui-overlay"></div>
+            
+            <!-- Success Overlay -->
+            <div id="success-overlay" class="hidden">
+                <div class="success-content">
+                    <h1>HARİKA!</h1>
+                    <p>Görev Tamamlandı</p>
+                    <div class="next-timer">Sonraki Görev: <span id="timer-val">3</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Panel (Stats) -->
+        <div id="bottom-panel">
+            <div class="panel-header-line"></div>
+            <div class="panel-content">
+                <div class="user-stats-label">SENİN YAPTIĞIN:</div>
+                <div class="user-stats">
+                    <div class="stat-item" id="user-area-box">
+                        <span class="label">ALAN</span>
+                        <span class="value" id="current-area">0</span>
+                    </div>
+                    <div class="stat-separator">|</div>
+                    <div class="stat-item" id="user-perimeter-box">
+                        <span class="label">ÇEVRE</span>
+                        <span class="value" id="current-perimeter">0</span>
+                    </div>
+                </div>
+                <div class="credits">FTC #24230</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
