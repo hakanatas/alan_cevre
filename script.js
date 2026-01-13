@@ -308,11 +308,6 @@ function drawShape(left, top, right, bottom, unitW, unitH, snappedRight, snapped
         mainColor = "#32ff32";
     }
 
-    // A. Hand Frame (Gray)
-    canvasCtx.strokeStyle = "rgba(80,80,80, 0.5)";
-    canvasCtx.lineWidth = 1;
-    canvasCtx.strokeRect(left, top, right - left, bottom - top);
-
     // B. Grid Lines (White)
     canvasCtx.beginPath();
     canvasCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
