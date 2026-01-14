@@ -150,28 +150,21 @@ async function createHandLandmarker() {
         numHands: 2
     });
 
-    // Model loaded - show start button
-    const spinner = document.getElementById("loading-spinner");
+    // Model loaded - auto-start the game (for Raspberry Pi kiosk mode)
     const loadingText = document.getElementById("loading-text");
     const loadingSubtext = document.getElementById("loading-subtext");
-    const startButton = document.getElementById("start-button");
 
-    spinner.classList.add("hidden");
-    loadingText.innerText = "Hazır!";
-    loadingSubtext.innerText = "Oyunu başlatmak için butona tıkla";
-    startButton.classList.remove("hidden");
+    loadingText.innerText = "Başlatılıyor...";
+    loadingSubtext.innerText = "Kamera açılıyor";
 
-    startButton.addEventListener("click", () => {
-        // Initialize audio on user interaction (required by browsers)
-        initAudio();
-        playTickSound(); // Test sound
+    // Auto-start without button click
+    initAudio();
 
-        loadingScreen.style.opacity = 0;
-        setTimeout(() => {
-            loadingScreen.classList.add("hidden");
-            enableCam();
-        }, 500);
-    });
+    loadingScreen.style.opacity = 0;
+    setTimeout(() => {
+        loadingScreen.classList.add("hidden");
+        enableCam();
+    }, 500);
 }
 
 function hasGetUserMedia() {
