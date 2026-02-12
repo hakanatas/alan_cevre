@@ -27,7 +27,20 @@ SERVER_PID=$!
 sleep 2
 
 # Tarayiciyi ac
-open "http://localhost:$PORT"
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux (Raspberry Pi)
+    echo "Linux tespit edildi, Chromium baslatiliyor..."
+    chromium-browser --app=http://localhost:$PORT \
+        --unsafely-treat-insecure-origin-as-secure=http://localhost:$PORT \
+        --autoplay-policy=no-user-gesture-required \
+        --check-for-update-interval=31536000
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    open "http://localhost:$PORT"
+else
+    # Diger isletim sistemleri
+    xdg-open "http://localhost:$PORT"
+fi
 
 echo ""
 echo "Oyun tarayicinizi acti! (Adres: http://localhost:$PORT)"
